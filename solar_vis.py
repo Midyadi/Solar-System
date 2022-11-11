@@ -121,4 +121,10 @@ class DrawableObject:
         self.obj = obj
 
     def draw(self, surface):
-        pass  # FIXME
+        """
+        Рисует DrawableObject на поверхности surface
+
+        Args:
+             surface - поверхность для отрисовки
+        """
+        self.draw(surface)
