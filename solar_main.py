@@ -1,7 +1,7 @@
 # coding: utf-8
 # license: GPLv3
 
-import pygame as pg
+import pygame
 from solar_vis import *
 from solar_model import *
 from solar_input import *
@@ -149,9 +149,9 @@ def main():
 
     pg.init()
 
-    width = 1000
-    height = 900
-    screen = pg.display.set_mode((width, height))
+    width = 900
+    height = 800
+    screen = pygame.display.set_mode((width, height))
     last_time = time.perf_counter()
     drawer = Drawer(screen)
     menu, box, timer = init_ui(screen)
