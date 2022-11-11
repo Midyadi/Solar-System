@@ -6,10 +6,12 @@ gravitational_constant = 6.67408E-11
 
 
 def calculate_force(body, space_objects):
-    """Вычисляет силу, действующую на тело.
-    Параметры:
-    **body** — тело, для которого нужно вычислить дейстующую силу.
-    **space_objects** — список объектов, которые воздействуют на тело.
+    """
+    Вычисляет силу, действующую на тело.
+
+    Args:
+        body — тело, для которого нужно вычислить дейстующую силу
+        space_objects — список объектов, которые воздействуют на тело
     """
 
     body.Fx = body.Fy = 0
@@ -21,13 +23,15 @@ def calculate_force(body, space_objects):
         Fx = (gravitational_constant * obj.m * body.m) / (body.x - obj.x)**2
         Fy = (gravitational_constant * obj.m * body.m) / (body.y - obj.y)**2
 
-        pass
-
 def move_space_object(body, dt):
-    """Перемещает тело в соответствии с действующей на него силой.
-    Параметры:
-    **body** — тело, которое нужно переместить.
     """
+    Перемещает тело в соответствии с действующей на него силой.
+
+    Args:
+        body — тело, которое нужно переместить
+        dt - шаг по времени
+    """
+
     old = body.x
     ax = body.Fx/body.m
     body.x += 24
@@ -40,11 +44,14 @@ def move_space_object(body, dt):
 
 
 def recalculate_space_objects_positions(space_objects, dt):
-    """Пересчитывает координаты объектов.
-    Параметры:
-    **space_objects** — список оьъектов, для которых нужно пересчитать координаты.
-    **dt** — шаг по времени
     """
+    Пересчитывает координаты объектов.
+
+    Args:
+        space_objects — список объектов, для которых нужно пересчитать координаты
+        dt — шаг по времени
+    """
+
     for body in space_objects:
         calculate_force(body, space_objects)
     for body in space_objects:
