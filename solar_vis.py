@@ -102,7 +102,7 @@ class Drawer:
         """
         self.screen.fill((0, 0, 0))
         for figure in figures:
-            figure.draw(self.screen)
+            figure.drawing(self.screen)
 
         ui.blit()
         ui.update()
@@ -120,11 +120,11 @@ class DrawableObject:
 
         self.obj = obj
 
-    def draw(self, surface):
+    def drawing(self, surface):
         """
         Рисует DrawableObject на поверхности surface
 
         Args:
              surface - поверхность для отрисовки
         """
-        self.draw(surface)
+        pg.draw.circle(surface, self.obj.color, (self.obj.x, self.obj.y), self.obj.R)
