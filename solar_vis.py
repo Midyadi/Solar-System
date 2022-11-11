@@ -127,6 +127,14 @@ class DrawableObject:
         Args:
              surface - поверхность для отрисовки
         """
+        if len(self.obj.orbit) > 2:
+            points = []
+            for point in self.obj.orbit:
+                x,y = point
+                new_x = x*scale_factor + window_width //2
+                new_y = - y*scale_factor + window_height //2
+                points.append((new_x,new_y))
+            pg.draw.lines(surface, (255,255,255), False, points,2)
         x = scale_x((self.obj.x))
         y = scale_y((self.obj.y))
         pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R)

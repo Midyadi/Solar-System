@@ -39,6 +39,8 @@ class Star:
     color = "red"
     """Цвет звезды"""
 
+    orbit = []
+
 
 class Planet:
     """
@@ -76,3 +78,5 @@ class Planet:
 
     color = "green"
     """Цвет планеты"""
+
+    orbit = []
