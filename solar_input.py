@@ -22,18 +22,18 @@ def read_space_objects_data_from_file(input_filename):
         for line in input_file:
             if len(line.strip()) == 0 or line[0] == '#':
                 continue  # пустые строки и строки-комментарии пропускаем
-
-            object_type = line.split()[0].lower()
-            if object_type == "star":
-                star = Star()
-                parse_star_parameters(line, star)
-                objects.append(star)
-            elif object_type == "planet":
-                planet = Planet()
-                parse_planet_parameters(line, planet)
-                objects.append(planet)
             else:
-                print("Unknown space object")
+                object_type = line.split()[0].lower()
+                if object_type == "star":
+                    star = Star()
+                    parse_star_parameters(line, star)
+                    objects.append(star)
+                elif object_type == "planet":
+                    planet = Planet()
+                    parse_planet_parameters(line, planet)
+                    objects.append(planet)
+                else:
+                    print("Unknown space object")
 
     return [DrawableObject(obj) for obj in objects]
 
@@ -56,7 +56,6 @@ def parse_star_parameters(line, star):
     star.R = float(line[1])
     star.color = line[2]
     star.m, star.x, star.y, star.Vx, star.Vy = [float(param) for param in line[3:]]
-    #return [star.R, star.color, star.m, star.x, star.y, star.Vx, star.Vy]
 
 
 def parse_planet_parameters(line, planet):
@@ -74,7 +73,6 @@ def parse_planet_parameters(line, planet):
     planet.R = float(line[1])
     planet.color = line[2]
     planet.m, planet.x, planet.y, planet.Vx, planet.Vy = [float(param) for param in line[3:]]
-    #return [planet.R, planet.color, planet.m, planet.x, planet.y, planet.Vx, planet.Vy]
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):

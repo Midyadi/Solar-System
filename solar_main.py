@@ -165,8 +165,8 @@ def main():
 
     pygame.init()
 
-    width = 900
-    height = 800
+    width = 700
+    height = 700
     screen = pygame.display.set_mode((width, height))
     last_time = time.perf_counter()
     drawer = solar_vis.Drawer(screen)
