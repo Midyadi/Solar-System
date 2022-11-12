@@ -178,7 +178,7 @@ def main():
         cur_time = time.perf_counter()
         if perform_execution:
             execution((cur_time - last_time) * time_scale)
-            text = "%d seconds passed" % (int(model_time))
+            text = "%d days passed" % (int(model_time/3600/24))
             timer.set_text(text)
 
         last_time = cur_time

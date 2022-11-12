@@ -37,7 +37,7 @@ def calculate_scale_factor(max_distance):
     """
 
     global scale_factor
-    scale_factor = 0.5 * min(window_height, window_width) / max_distance
+    scale_factor = 0.45 * min(window_height, window_width) / max_distance
     print('Scale factor:', scale_factor)
 
 
@@ -74,7 +74,7 @@ def scale_y(y):
         y_screen - игрековая экранная координата
     """
 
-    y_screen = window_height//2 - int(y * scale_factor)
+    y_screen = window_height // 2 - int(y * scale_factor)
     return y_screen
 
 
@@ -119,6 +119,7 @@ class DrawableObject:
         """
 
         self.obj = obj
+        self.type = obj.type
 
     def drawing(self, surface):
         """
@@ -130,11 +131,14 @@ class DrawableObject:
         if len(self.obj.orbit) > 2:
             points = []
             for point in self.obj.orbit:
-                x,y = point
-                new_x = x*scale_factor + window_width //2
-                new_y = - y*scale_factor + window_height //2
-                points.append((new_x,new_y))
-            pg.draw.lines(surface, (255,255,255), False, points,2)
-        x = scale_x((self.obj.x))
-        y = scale_y((self.obj.y))
-        pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R)
+                x, y = point
+                new_x = x * scale_factor + window_width // 2
+                new_y = - y * scale_factor + window_height // 2
+                points.append((new_x, new_y))
+            pg.draw.lines(surface, (255, 255, 255), False, points, 1)
+        x = scale_x(self.obj.x)
+        y = scale_y(self.obj.y)
+        if self.type == 'star':
+            pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R * scale_factor * 20)
+        else:
+            pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R * scale_factor * 1500)
