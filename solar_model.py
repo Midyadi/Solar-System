@@ -11,8 +11,9 @@ def calculate_force(body, space_objects):
     Вычисляет силу, действующую на тело.
 
     Args:
-        body — тело, для которого нужно вычислить дейстующую силу.
-        space_objects — список объектов, которые воздействуют на тело.
+        body — тело, для которого нужно вычислить дейстующую силу
+
+        space_objects — список объектов, которые воздействуют на тело
     """
 
     body.Fx = body.Fy = 0
@@ -20,10 +21,10 @@ def calculate_force(body, space_objects):
         if body != obj:
             r = ((body.x - obj.x) ** 2 + (body.y - obj.y) ** 2) ** 0.5
             r = max(r, body.R)  # FIXME: обработка аномалий при прохождении одного тела сквозь другое
-            f = gravitational_constant * obj.m * body.m/r**2
-            alpha = math.atan2((body.y - obj.y),(body.x - obj.x))
-            body.Fx -= f*math.cos(alpha)
-            body.Fy -= f*math.sin(alpha)
+            f = gravitational_constant * obj.m * body.m / r ** 2
+            alpha = math.atan2((body.y - obj.y), (body.x - obj.x))
+            body.Fx -= f * math.cos(alpha)
+            body.Fy -= f * math.sin(alpha)
 
 
 def move_space_object(body, dt):
@@ -42,6 +43,7 @@ def move_space_object(body, dt):
     body.x += body.Vx * dt
     body.y += body.Vy * dt
     body.orbit.append([body.x, body.y])
+
 
 def recalculate_space_objects_positions(space_objects, dt):
     """

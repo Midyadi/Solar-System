@@ -5,7 +5,6 @@ import pygame
 import solar_vis
 import solar_model
 import solar_input
-import solar_objects
 import thorpy
 import time
 import numpy as np
@@ -116,7 +115,7 @@ def init_ui(screen):
     button_stop = thorpy.make_button("Quit", func=stop_execution)
     button_pause = thorpy.make_button("Pause", func=pause_execution)
     button_play = thorpy.make_button("Play", func=start_execution)
-    timer = thorpy.OneLineText("Seconds passed")
+    in_timer = thorpy.OneLineText("Seconds passed")
 
     button_load = thorpy.make_button(text="Load a file", func=open_file)
 
@@ -126,7 +125,7 @@ def init_ui(screen):
         button_stop,
         button_play,
         button_load,
-        timer])
+        in_timer])
     reaction1 = thorpy.Reaction(reacts_to=thorpy.constants.THORPY_EVENT,
                                 reac_func=slider_reaction,
                                 event_args={"id": thorpy.constants.EVENT_SLIDE},
@@ -141,7 +140,7 @@ def init_ui(screen):
     box.set_topleft((0, 0))
     box.blit()
     box.update()
-    return menu, box, timer
+    return menu, box, in_timer
 
 
 def main():
