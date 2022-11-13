@@ -1,7 +1,7 @@
 # coding: utf-8
 # license: GPLv3
 
-from solar_objects import Star, Planet
+from solar_objects import SpaceObject
 from solar_vis import DrawableObject
 
 
@@ -23,59 +23,33 @@ def read_space_objects_data_from_file(input_filename):
             if len(line.strip()) == 0 or line[0] == '#':
                 continue  # пустые строки и строки-комментарии пропускаем
             else:
-                object_type = line.split()[0].lower()
-                if object_type == "star":
-                    star = Star()
-                    parse_star_parameters(line, star)
-                    objects.append(star)
-                elif object_type == "planet":
-                    planet = Planet()
-                    parse_planet_parameters(line, planet)
-                    objects.append(planet)
-                else:
-                    print("Unknown space object")
+                obj = SpaceObject()
+                parse_object_parameters(line, obj)
+                objects.append(obj)
 
     return [DrawableObject(obj) for obj in objects]
 
 
-def parse_star_parameters(line, star):
+def parse_object_parameters(line, obj):
     """
-    Считывает данные о звезде из строки.
+    Считывает данные об объекте из строки.
     Входная строка должна иметь следюущий формат:
-    Star <радиус в пикселах> <цвет> <масса> <x> <y> <Vx> <Vy>
-    Здесь (x, y) — координаты звезды, (Vx, Vy) — скорость.
+    <тип объекта> <радиус в пикселах> <цвет> <масса> <x> <y> <Vx> <Vy>
+    Здесь (x, y) — координаты, (Vx, Vy) — скорость.
 
     Пример строки:
     Star 10 red 1000 1 2 3 4
 
     Параметры:
-    **line** — строка с описанием звезды.
-    **star** — объект звезды.
+    **line** — строка с описанием объекта.
+    **obj** — объект.
     """
     line = line.split()
-    star.orbit = []
-    star.R = float(line[1])
-    star.color = line[2]
-    star.m, star.x, star.y, star.Vx, star.Vy = [float(param) for param in line[3:]]
-
-
-def parse_planet_parameters(line, planet):
-    """
-    Считывает данные о планете из строки.
-    Входная строка должна иметь следюущий формат:
-    Planet <радиус в пикселах> <цвет> <масса> <x> <y> <Vx> <Vy>
-    Здесь (x, y) — координаты планеты, (Vx, Vy) — скорость.
-    Пример строки:
-    Planet 10 red 1000 1 2 3 4
-    Параметры:
-    **line** — строка с описание планеты.
-    **planet** — объект планеты.
-    """
-    line = line.split()
-    planet.orbit = []
-    planet.R = float(line[1])
-    planet.color = line[2]
-    planet.m, planet.x, planet.y, planet.Vx, planet.Vy = [float(param) for param in line[3:]]
+    obj.type = line[0].lower()
+    obj.orbit = []
+    obj.R = float(line[1])
+    obj.color = line[2]
+    obj.m, obj.x, obj.y, obj.Vx, obj.Vy = [float(param) for param in line[3:]]
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):
