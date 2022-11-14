@@ -92,7 +92,7 @@ class Drawer:
         """
         self.screen = screen
 
-    def update(self, figures, ui):
+    def updating(self, figures, ui):
         """
         Обновляет экран, рисует объекты, печатает текст
 

@@ -181,7 +181,7 @@ def main():
             timer.set_text(text)
 
         last_time = cur_time
-        drawer.update(space_objects, box)
+        drawer.updating(space_objects, box)
         time.sleep(1.0 / 60)
 
     print('Modelling finished!')
