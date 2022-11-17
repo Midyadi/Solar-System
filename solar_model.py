@@ -7,6 +7,7 @@ gravitational_constant = 6.67408E-11
 
 
 def calculate_force(body, space_objects):
+
     """
     Вычисляет силу, действующую на тело.
 
@@ -28,12 +29,18 @@ def calculate_force(body, space_objects):
 
 
 def move_space_object(body, dt, space_objects, t):
+
     """
     Перемещает тело в соответствии с действующей на него силой.
 
     Args:
         body — тело, которое нужно переместить
+
         dt - шаг по времени
+
+        space_objects - список всех объектов
+
+        t - момент времени
     """
 
     ax = body.Fx / body.m
@@ -54,12 +61,16 @@ def move_space_object(body, dt, space_objects, t):
 
 
 def recalculate_space_objects_positions(space_objects, dt, t):
+
     """
     Пересчитывает координаты объектов.
 
     Args:
         space_objects — список объектов, для которых нужно пересчитать координаты
+
         dt — шаг по времени
+
+        t - момент времени
     """
 
     for body in space_objects:

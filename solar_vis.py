@@ -29,6 +29,7 @@ scale_factor = 1
 
 
 def calculate_scale_factor(max_distance):
+
     """
     Вычисляет значение глобальной переменной **scale_factor** по данной характерной длине
 
@@ -42,6 +43,7 @@ def calculate_scale_factor(max_distance):
 
 
 def scale_x(x):
+
     """
     Возвращает экранную **x** координату по **x** координате модели.
     Принимает вещественное число, возвращает целое число.
@@ -60,6 +62,7 @@ def scale_x(x):
 
 
 def scale_y(y):
+
     """
     Возвращает экранную **y** координату по **y** координате модели.
     Принимает вещественное число, возвращает целое число.
@@ -84,22 +87,26 @@ if __name__ == "__main__":
 
 class Drawer:
     def __init__(self, screen):
+
         """
         Конструктор класса Drawer
 
         Args:
             screen - экран
         """
+
         self.screen = screen
 
     def updating(self, figures, ui):
+
         """
         Обновляет экран, рисует объекты, печатает текст
 
         Args:
             figures - набор объектов для отрисовки
-            ui - ?????
+            ui - интерфейс
         """
+
         self.screen.fill((0, 0, 0))
         for figure in figures:
             figure.drawing(self.screen)
@@ -111,6 +118,7 @@ class Drawer:
 
 class DrawableObject:
     def __init__(self, obj):
+
         """
         Конструктор класса DrawableObject
 
@@ -122,12 +130,14 @@ class DrawableObject:
         self.type = obj.type
 
     def drawing(self, surface):
+
         """
         Рисует DrawableObject на поверхности surface
 
         Args:
              surface - поверхность для отрисовки
         """
+
         if len(self.obj.orbit) > 2:
             points = []
             for point in self.obj.orbit:

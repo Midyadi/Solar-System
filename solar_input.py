@@ -6,6 +6,7 @@ from solar_vis import DrawableObject
 
 
 def read_space_objects_data_from_file(input_filename):
+
     """
     Считывает данные о космических объектах из файла, создаёт сами объекты
     и вызывает создание их графических образов
@@ -31,6 +32,7 @@ def read_space_objects_data_from_file(input_filename):
 
 
 def parse_object_parameters(line, obj):
+
     """
     Считывает данные об объекте из строки.
     Входная строка должна иметь следующий формат:
@@ -44,6 +46,7 @@ def parse_object_parameters(line, obj):
     **line** — строка с описанием объекта.
     **obj** — объект.
     """
+
     line = line.split()
     obj.type = line[0].lower()
     obj.orbit = []
@@ -53,6 +56,7 @@ def parse_object_parameters(line, obj):
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):
+
     """
     Сохраняет данные о космических объектах в файл.
     Строки должны иметь следующий формат:

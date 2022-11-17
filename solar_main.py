@@ -32,12 +32,18 @@ space_objects = []
 
 
 def execution(delta, t):
+
     """
     Функция исполнения -- выполняется циклически, вызывая обработку всех небесных тел,
     а также обновляя их положение на экране.
     Цикличность выполнения зависит от значения глобальной переменной perform_execution.
     При perform_execution == True функция запрашивает вызов самой себя по таймеру
     через время от 1 мс до 100 мс.
+
+    Args:
+        delta - промежуток времени между отрисовками
+
+        t - текущий момент времени
     """
 
     global model_time
@@ -47,16 +53,19 @@ def execution(delta, t):
 
 
 def start_execution():
+
     """
     Обработчик события нажатия на кнопку Start.
     Запускает циклическое исполнение функции execution.
     """
+
 
     global perform_execution
     perform_execution = True
 
 
 def pause_execution():
+
     """
     Обработчик события нажатия на кнопку Pause.
     Останавливает циклическое исполнение функции execution.
@@ -67,18 +76,28 @@ def pause_execution():
 
 
 def exiting():
+
     """
-    Обработчик события нажатия на кнопку Start.
-    Останавливает циклическое исполнение функции execution.
+    Обработчик полного выхода из программы.
     """
 
     global stopper
     stopper = False
 
 
-# def stop_executing():
+def stop_executing():
+
+    """
+    Обработчик события нажатия на кнопку Stop.
+    Останавливает циклическое исполнение функции execution.
+    """
+
+    global perform_execution
+    perform_execution = False
+
 
 def open_file():
+
     """
     Открывает диалоговое окно выбора имени файла и вызывает
     функцию считывания параметров системы небесных тел из данного файла.
@@ -114,6 +133,19 @@ def slider_reaction(event):
 
 
 def init_ui(screen):
+
+    """
+    Создаёт интерфейс взаимодействия пользователя с симуляцией
+
+    Args:
+        screen - экран для отрисовки интерфейса
+
+    Returns:
+        menu - сам интерфейс
+        box - набор элементов интерфейса
+        in-timer - время
+    """
+
     global browser
     slider = thorpy.SliderX(100, (-10, 10), "Simulation speed")
     slider.user_func = slider_reaction
@@ -149,6 +181,7 @@ def init_ui(screen):
 
 
 def main():
+
     """
     Главная функция главного модуля.
     Создаёт объекты графического дизайна библиотеки tkinter:
