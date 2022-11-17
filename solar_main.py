@@ -117,7 +117,7 @@ def init_ui(screen):
     global browser
     slider = thorpy.SliderX(100, (-10, 10), "Simulation speed")
     slider.user_func = slider_reaction
-    button_stop = thorpy.make_button("Quit", func=exit())
+    button_stop = thorpy.make_button("Quit", func=exiting())
     button_pause = thorpy.make_button("Pause", func=pause_execution)
     button_play = thorpy.make_button("Play", func=start_execution)
     in_timer = thorpy.OneLineText("Days passed")
