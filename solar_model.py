@@ -27,7 +27,7 @@ def calculate_force(body, space_objects):
             body.Fy -= f * math.sin(alpha)
 
 
-def move_space_object(body, dt):
+def move_space_object(body, dt, space_objects, t):
     """
     Перемещает тело в соответствии с действующей на него силой.
 
@@ -44,8 +44,16 @@ def move_space_object(body, dt):
     body.y += body.Vy * dt
     body.orbit.append([body.x, body.y])
 
+    star = space_objects[0]
+    if body.type != 'star':
+        body.speed.append((body.Vx**2+body.Vy**2)**0.5)
+        body.x_speed.append(body.Vx)
+        body.y_speed.append(body.Vy)
+        body.dst.append(((body.x-star.x)**2+(body.y-star.y)**2)**0.5)
+        body.t.append(t)
 
-def recalculate_space_objects_positions(space_objects, dt):
+
+def recalculate_space_objects_positions(space_objects, dt, t):
     """
     Пересчитывает координаты объектов.
 
@@ -57,7 +65,7 @@ def recalculate_space_objects_positions(space_objects, dt):
     for body in space_objects:
         calculate_force(body, space_objects)
     for body in space_objects:
-        move_space_object(body, dt)
+        move_space_object(body, dt, space_objects, t)
 
 
 if __name__ == "__main__":

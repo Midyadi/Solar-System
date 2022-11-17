@@ -45,3 +45,9 @@ class SpaceObject:
 
         self.orbit = []
         """Координаты точек орбиты"""
+
+        self.speed = []
+        self.x_speed = []
+        self.y_speed = []
+        self.t = []
+        self.dst = []

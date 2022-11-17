@@ -5,6 +5,7 @@ import pygame
 import solar_vis
 import solar_model
 import solar_input
+import graphs
 import thorpy
 import time
 import numpy as np
@@ -12,6 +13,8 @@ import numpy as np
 timer = None
 
 alive = True
+
+stopper = False
 
 perform_execution = False
 """Флаг цикличности выполнения расчёта"""
@@ -28,7 +31,7 @@ space_objects = []
 """Список космических объектов."""
 
 
-def execution(delta):
+def execution(delta, t):
     """
     Функция исполнения -- выполняется циклически, вызывая обработку всех небесных тел,
     а также обновляя их положение на экране.
@@ -39,7 +42,7 @@ def execution(delta):
 
     global model_time
     global displayed_time
-    solar_model.recalculate_space_objects_positions([dr.obj for dr in space_objects], delta)
+    solar_model.recalculate_space_objects_positions([dr.obj for dr in space_objects], delta, t)
     model_time += delta
 
 
@@ -63,15 +66,17 @@ def pause_execution():
     perform_execution = False
 
 
-def stop_execution():
+def exiting():
     """
     Обработчик события нажатия на кнопку Start.
     Останавливает циклическое исполнение функции execution.
     """
 
-    global alive
-    alive = False
+    global stopper
+    stopper = False
 
+
+# def stop_executing():
 
 def open_file():
     """
@@ -85,7 +90,7 @@ def open_file():
     global model_time
 
     model_time = 0.0
-    in_filename = "solar_system.txt"
+    in_filename = "one_satellite.txt"
     space_objects = solar_input.read_space_objects_data_from_file(in_filename)
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
     solar_vis.calculate_scale_factor(max_distance)
@@ -112,7 +117,7 @@ def init_ui(screen):
     global browser
     slider = thorpy.SliderX(100, (-10, 10), "Simulation speed")
     slider.user_func = slider_reaction
-    button_stop = thorpy.make_button("Quit", func=stop_execution)
+    button_stop = thorpy.make_button("Quit", func=exit())
     button_pause = thorpy.make_button("Pause", func=pause_execution)
     button_play = thorpy.make_button("Play", func=start_execution)
     in_timer = thorpy.OneLineText("Days passed")
@@ -176,14 +181,27 @@ def main():
         handle_events(pygame.event.get(), menu)
         cur_time = time.perf_counter()
         if perform_execution:
-            execution((cur_time - last_time) * time_scale)
-            text = "%d days passed" % (int(model_time/3600/24))
+            execution((cur_time - last_time) * time_scale, model_time)
+            text = "%d days passed" % (int(model_time / 3600 / 24))
             timer.set_text(text)
 
         last_time = cur_time
         drawer.updating(space_objects, box)
         time.sleep(1.0 / 60)
 
+    with open('out_file.txt', 'w', encoding='utf-8') as out_file:
+        for body in space_objects:
+            if body.obj.type != 'star':
+                for data in (body.obj.speed, body.obj.x_speed, body.obj.y_speed, body.obj.dst, body.obj.t):
+                    print(*data[:-5], file=out_file)
+    data = graphs.reading('out_file.txt')
+    graphs.plotting(data[-1], data[0], "V(t).jpg", "t, days", "V, kps")
+    graphs.plotting(data[-1], data[1], 'Vx(t).jpg', 't, days', 'Vx, kps')
+    graphs.plotting(data[-1], data[2], 'Vy(t).jpg', 't, days', 'Vy, kps')
+    graphs.plotting(data[-1], data[3], 'Dst(t).jpg', 't, days', 'dst, mln km')
+    graphs.plotting(data[3], data[0], 'V(dst).jpg', 'dst, mln km', "V, kps")
+    graphs.plotting(data[3], data[1], 'Vx(dst).jpg', 'dst, mln km', "Vx, kps")
+    graphs.plotting(data[3], data[2], 'Vy(dst).jpg', 'dst, mln km', "Vy, kps")
     print('Modelling finished!')
 
 
