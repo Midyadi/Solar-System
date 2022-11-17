@@ -59,7 +59,6 @@ def start_execution():
     Запускает циклическое исполнение функции execution.
     """
 
-
     global perform_execution
     perform_execution = True
 
@@ -75,25 +74,16 @@ def pause_execution():
     perform_execution = False
 
 
-def exiting():
+def stop_execution():
 
     """
-    Обработчик полного выхода из программы.
+    Обработчик события нажатия на кнопку Quit.
+    Останавливает циклическое исполнение функции execution
+    для дальнейшего вывода графиков на экран.
     """
 
     global stopper
-    stopper = False
-
-
-def stop_executing():
-
-    """
-    Обработчик события нажатия на кнопку Stop.
-    Останавливает циклическое исполнение функции execution.
-    """
-
-    global perform_execution
-    perform_execution = False
+    stopper = True
 
 
 def open_file():
@@ -149,7 +139,7 @@ def init_ui(screen):
     global browser
     slider = thorpy.SliderX(100, (-10, 10), "Simulation speed")
     slider.user_func = slider_reaction
-    button_stop = thorpy.make_button("Quit", func=exiting())
+    button_stop = thorpy.make_button("Quit", func=stop_execution)
     button_pause = thorpy.make_button("Pause", func=pause_execution)
     button_play = thorpy.make_button("Play", func=start_execution)
     in_timer = thorpy.OneLineText("Days passed")
@@ -227,7 +217,9 @@ def main():
             if body.obj.type != 'star':
                 for data in (body.obj.speed, body.obj.x_speed, body.obj.y_speed, body.obj.dst, body.obj.t):
                     print(*data[:-5], file=out_file)
+
     data = graphs.reading('out_file.txt')
+
     graphs.plotting(data[-1], data[0], "V(t).jpg", "t, days", "V, kps")
     graphs.plotting(data[-1], data[1], 'Vx(t).jpg', 't, days', 'Vx, kps')
     graphs.plotting(data[-1], data[2], 'Vy(t).jpg', 't, days', 'Vy, kps')
@@ -235,6 +227,7 @@ def main():
     graphs.plotting(data[3], data[0], 'V(dst).jpg', 'dst, mln km', "V, kps")
     graphs.plotting(data[3], data[1], 'Vx(dst).jpg', 'dst, mln km', "Vx, kps")
     graphs.plotting(data[3], data[2], 'Vy(dst).jpg', 'dst, mln km', "Vy, kps")
+
     print('Modelling finished!')
 
 

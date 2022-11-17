@@ -24,7 +24,7 @@ def reading(file_name):
         speed, x_speed, y_speed, dst, t = [[float(i) for i in line.split()] for line in file.readlines()]
         speed = [i / 1000 for i in speed]
         x_speed = [i / 1000 for i in x_speed]
-        y_speed = [i / 1000 for i in y_speed]
+        y_speed = [i / 1000 for i in y_speed]   # Перевод в более удобные единицы измерения
         dst = [i / 1000000000 for i in dst]
         t = [i / 3600 / 24 for i in t]
     return speed, x_speed, y_speed, dst, t
@@ -44,7 +44,7 @@ def plotting(x_data, y_data, name, x_label, y_label):
 
         x_label - подпись оси x
 
-        y_label - подпис оси y
+        y_label - подпись оси y
     """
 
     matplotlib.rcParams['font.size'] = 19
