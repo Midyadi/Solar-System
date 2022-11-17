@@ -115,7 +115,7 @@ def init_ui(screen):
     button_stop = thorpy.make_button("Quit", func=stop_execution)
     button_pause = thorpy.make_button("Pause", func=pause_execution)
     button_play = thorpy.make_button("Play", func=start_execution)
-    in_timer = thorpy.OneLineText("Seconds passed")
+    in_timer = thorpy.OneLineText("Days passed")
 
     button_load = thorpy.make_button(text="Load a file", func=open_file)
 
