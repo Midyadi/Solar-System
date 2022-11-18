@@ -81,10 +81,6 @@ def scale_y(y):
     return y_screen
 
 
-if __name__ == "__main__":
-    print("This module is not for direct call!")
-
-
 class Drawer:
     def __init__(self, screen):
 
@@ -152,3 +148,7 @@ class DrawableObject:
             pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R * scale_factor * 20)
         else:
             pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R * scale_factor * 1500)
+
+
+if __name__ == "__main__":
+    print("This module is not for direct call!")

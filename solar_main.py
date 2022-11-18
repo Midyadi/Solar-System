@@ -2,10 +2,7 @@
 # license: GPLv3
 
 import pygame
-import solar_vis
-import solar_model
-import solar_input
-import graphs
+from Engine import graphs, solar_input, solar_model, solar_vis
 import thorpy
 import time
 import numpy as np
@@ -99,7 +96,7 @@ def open_file():
     global model_time
 
     model_time = 0.0
-    in_filename = "one_satellite.txt"
+    in_filename = "Systems Data/one_satellite.txt"
     space_objects = solar_input.read_space_objects_data_from_file(in_filename)
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
     solar_vis.calculate_scale_factor(max_distance)
@@ -212,21 +209,21 @@ def main():
         drawer.updating(space_objects, box)
         time.sleep(1.0 / 60)
 
-    with open('out_file.txt', 'w', encoding='utf-8') as out_file:
+    with open('Output/Data/out_file.txt', 'w', encoding='utf-8') as out_file:
         for body in space_objects:
             if body.obj.type != 'star':
                 for data in (body.obj.speed, body.obj.x_speed, body.obj.y_speed, body.obj.dst, body.obj.t):
                     print(*data[:-5], file=out_file)
 
-    data = graphs.reading('out_file.txt')
+    data = graphs.reading('Output/Data/out_file.txt')
 
-    graphs.plotting(data[-1], data[0], "V(t).jpg", "t, days", "V, kps")
-    graphs.plotting(data[-1], data[1], 'Vx(t).jpg', 't, days', 'Vx, kps')
-    graphs.plotting(data[-1], data[2], 'Vy(t).jpg', 't, days', 'Vy, kps')
-    graphs.plotting(data[-1], data[3], 'Dst(t).jpg', 't, days', 'dst, mln km')
-    graphs.plotting(data[3], data[0], 'V(dst).jpg', 'dst, mln km', "V, kps")
-    graphs.plotting(data[3], data[1], 'Vx(dst).jpg', 'dst, mln km', "Vx, kps")
-    graphs.plotting(data[3], data[2], 'Vy(dst).jpg', 'dst, mln km', "Vy, kps")
+    graphs.plotting(data[-1], data[0], "../Output/Graphs/V(t).jpg", "t, days", "V, kps")
+    graphs.plotting(data[-1], data[1], '../Output/Graphs/Vx(t).jpg', 't, days', 'Vx, kps')
+    graphs.plotting(data[-1], data[2], '../Output/Graphs/Vy(t).jpg', 't, days', 'Vy, kps')
+    graphs.plotting(data[-1], data[3], '../Output/Graphs/Dst(t).jpg', 't, days', 'dst, mln km')
+    graphs.plotting(data[3], data[0], '../Output/Graphs/V(dst).jpg', 'dst, mln km', "V, kps")
+    graphs.plotting(data[3], data[1], '../Output/Graphs/Vx(dst).jpg', 'dst, mln km', "Vx, kps")
+    graphs.plotting(data[3], data[2], '../Output/Graphs/Vy(dst).jpg', 'dst, mln km', "Vy, kps")
 
     print('Modelling finished!')
 

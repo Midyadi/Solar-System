@@ -1,8 +1,8 @@
 # coding: utf-8
 # license: GPLv3
 
-from solar_objects import SpaceObject
-from solar_vis import DrawableObject
+from Engine.solar_objects import SpaceObject
+from Engine.solar_vis import DrawableObject
 
 
 def read_space_objects_data_from_file(input_filename):
