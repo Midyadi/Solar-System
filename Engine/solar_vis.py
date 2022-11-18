@@ -144,7 +144,7 @@ class DrawableObject:
             pg.draw.lines(surface, (255, 255, 255), False, points, 1)
         x = scale_x(self.obj.x)
         y = scale_y(self.obj.y)
-        if self.type == 'star':
+        if self.type == 'star':     # TODO: сделать нормальный расчёт коэффициентов для планет и звёзд
             pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R * scale_factor * 20)
         else:
             pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R * scale_factor * 1500)

@@ -25,7 +25,7 @@ def reading(file_name):
         speed = [i / 1000 for i in speed]
         x_speed = [i / 1000 for i in x_speed]
         y_speed = [i / 1000 for i in y_speed]   # Перевод в более удобные единицы измерения
-        dst = [i / 1000000000 for i in dst]
+        dst = [i / 1000000000 for i in dst]     # TODO: сделать перевод читабельным
         t = [i / 3600 / 24 for i in t]
     return speed, x_speed, y_speed, dst, t
 
@@ -54,7 +54,7 @@ def plotting(x_data, y_data, name, x_label, y_label):
     plt.grid(visible=True, which='minor', axis='both', alpha=0.5)
     plt.minorticks_on()
 
-    plt.title(name[:-4])
+    plt.title(name[name.rindex('/')+1:-4])
     plt.xlabel(x_label)
     plt.ylabel(y_label)
 
@@ -62,7 +62,7 @@ def plotting(x_data, y_data, name, x_label, y_label):
     plt.savefig(name)
 
 
-def show_graph():
+def show_graph():       # TODO: сделать функцию вывода графиков на экран
 
     """
     Выводит заранее изготовленную картинку с графиком на экран

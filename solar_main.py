@@ -71,8 +71,8 @@ def pause_execution():
     perform_execution = False
 
 
-def stop_execution():
-
+def stop_execution():   # TODO: активировать кнопку quit для вывода графиков в pygame окно
+                        # TODO: можно переименовать кнопку quit на show graphs или что-то такое
     """
     Обработчик события нажатия на кнопку Quit.
     Останавливает циклическое исполнение функции execution
@@ -96,7 +96,7 @@ def open_file():
     global model_time
 
     model_time = 0.0
-    in_filename = "Systems Data/one_satellite.txt"
+    in_filename = "Systems Data/solar_system.txt"
     space_objects = solar_input.read_space_objects_data_from_file(in_filename)
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
     solar_vis.calculate_scale_factor(max_distance)
@@ -178,8 +178,8 @@ def main():
     global physical_time
     global displayed_time
     global time_step
-    global time_speed
-    global space
+    global time_speed               # TODO: избавиться от глобальных переменных (относится ко всем файлам)
+    global space                    # TODO: надо создать класс, который будет содержать эти переменные
     global start_button
     global perform_execution
     global timer
@@ -215,15 +215,16 @@ def main():
                 for data in (body.obj.speed, body.obj.x_speed, body.obj.y_speed, body.obj.dst, body.obj.t):
                     print(*data[:-5], file=out_file)
 
-    data = graphs.reading('Output/Data/out_file.txt')
+    if len(space_objects) == 2:     # TODO: Графики рисуются только для одной планеты,
+        data = graphs.reading('Output/Data/out_file.txt')   # TODO: иначе вся система счёт-обработка-вывод умирает
 
-    graphs.plotting(data[-1], data[0], "../Output/Graphs/V(t).jpg", "t, days", "V, kps")
-    graphs.plotting(data[-1], data[1], '../Output/Graphs/Vx(t).jpg', 't, days', 'Vx, kps')
-    graphs.plotting(data[-1], data[2], '../Output/Graphs/Vy(t).jpg', 't, days', 'Vy, kps')
-    graphs.plotting(data[-1], data[3], '../Output/Graphs/Dst(t).jpg', 't, days', 'dst, mln km')
-    graphs.plotting(data[3], data[0], '../Output/Graphs/V(dst).jpg', 'dst, mln km', "V, kps")
-    graphs.plotting(data[3], data[1], '../Output/Graphs/Vx(dst).jpg', 'dst, mln km', "Vx, kps")
-    graphs.plotting(data[3], data[2], '../Output/Graphs/Vy(dst).jpg', 'dst, mln km', "Vy, kps")
+        graphs.plotting(data[-1], data[0], "Output/Graphs/V(t).jpg", "t, days", "V, kps")
+        graphs.plotting(data[-1], data[1], 'Output/Graphs/Vx(t).jpg', 't, days', 'Vx, kps')
+        graphs.plotting(data[-1], data[2], 'Output/Graphs/Vy(t).jpg', 't, days', 'Vy, kps')
+        graphs.plotting(data[-1], data[3], 'Output/Graphs/Dst(t).jpg', 't, days', 'dst, mln km')
+        graphs.plotting(data[3], data[0], 'Output/Graphs/V(dst).jpg', 'dst, mln km', "V, kps")
+        graphs.plotting(data[3], data[1], 'Output/Graphs/Vx(dst).jpg', 'dst, mln km', "Vx, kps")
+        graphs.plotting(data[3], data[2], 'Output/Graphs/Vy(dst).jpg', 'dst, mln km', "Vy, kps")
 
     print('Modelling finished!')
 
