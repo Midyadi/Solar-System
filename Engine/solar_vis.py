@@ -38,7 +38,7 @@ def calculate_scale_factor(max_distance):
     """
 
     global scale_factor
-    scale_factor = 0.45 * min(window_height, window_width) / max_distance
+    scale_factor = 0.3 * min(window_height, window_width) / max_distance
     print('Scale factor:', scale_factor)
 
 
@@ -145,7 +145,7 @@ class DrawableObject:
         x = scale_x(self.obj.x)
         y = scale_y(self.obj.y)
         if self.type == 'star':     # TODO: сделать нормальный расчёт коэффициентов для планет и звёзд
-            pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R * scale_factor * 20)
+            pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R * scale_factor)
         else:
             pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R * scale_factor * 1500)
 
